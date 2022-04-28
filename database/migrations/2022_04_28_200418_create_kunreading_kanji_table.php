@@ -17,6 +17,9 @@ class CreateKunreadingKanjiTable extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->unsignedBigInteger('kunreading_id');
+            $table->unsignedBigInteger('kanji_id');
+
             $table->foreign('kunreading_id')->references('id')->on('kunreadings')->onDelete('cascade');
             $table->foreign('kanji_id')->references('id')->on('kanjis')->onDelete('cascade');
         });

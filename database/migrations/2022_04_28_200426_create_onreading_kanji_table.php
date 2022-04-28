@@ -16,6 +16,8 @@ class CreateOnreadingKanjiTable extends Migration
         Schema::create('onreading_kanji', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('onreading_id');
+            $table->unsignedBigInteger('kanji_id');
 
             $table->foreign('onreading_id')->references('id')->on('onreadings')->onDelete('cascade');
             $table->foreign('kanji_id')->references('id')->on('kanjis')->onDelete('cascade');
