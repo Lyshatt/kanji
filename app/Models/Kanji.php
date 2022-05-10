@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kanji extends Model
 {
     use HasFactory;
+    protected $table = 'Kanji';
 
     protected $fillable = [
         'symbol',
@@ -17,17 +18,17 @@ class Kanji extends Model
 
     public function kunReadings()
     {
-        return $this->hasMany(KunReading::class);
+        return $this->belongsToMany(KunReading::class, 'kun_reading_kanji');
     }
 
     public function onReadings()
     {
-        return $this->hasMany(OnReading::class);
+        return $this->belongsToMany(OnReading::class, 'on_reading_kanji');
     }
 
     public function words()
     {
-        return $this->hasMany(Word::class);
+        return $this->belongsToMany(Word::class, 'word_kanji');
     }
 
 

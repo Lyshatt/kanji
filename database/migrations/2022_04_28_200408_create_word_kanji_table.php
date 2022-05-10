@@ -20,7 +20,7 @@ class CreateWordKanjiTable extends Migration
             $table->unsignedBigInteger('kanji_id');
 
             $table->foreign('word_id')->references('id')->on('words')->onDelete('cascade');
-            $table->foreign('kanji_id')->references('id')->on('kanjis')->onDelete('cascade');
+            $table->foreign('kanji_id')->references('id')->on('kanji')->onDelete('cascade');
         });
     }
 

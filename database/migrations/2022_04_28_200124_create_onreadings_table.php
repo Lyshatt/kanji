@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOnreadingsTable extends Migration
+class CreateOnReadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateOnreadingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('onreadings', function (Blueprint $table) {
+        Schema::create('on_readings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('reading');
@@ -27,6 +27,6 @@ class CreateOnreadingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('onreadings');
+        Schema::dropIfExists('on_readings');
     }
 }

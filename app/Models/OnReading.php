@@ -13,7 +13,7 @@ class OnReading extends Model
         'reading'
     ];
 
-    public function kanjis()
+    public function kanji()
     {
         return $this->belongsToMany(Kanji::class);
     }

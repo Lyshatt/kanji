@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOnreadingKanjiTable extends Migration
+class CreateOnReadingKanjiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateOnreadingKanjiTable extends Migration
      */
     public function up()
     {
-        Schema::create('onreading_kanji', function (Blueprint $table) {
+        Schema::create('on_reading_kanji', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('onreading_id');
+            $table->unsignedBigInteger('on_reading_id');
             $table->unsignedBigInteger('kanji_id');
 
-            $table->foreign('onreading_id')->references('id')->on('onreadings')->onDelete('cascade');
-            $table->foreign('kanji_id')->references('id')->on('kanjis')->onDelete('cascade');
+            $table->foreign('on_reading_id')->references('id')->on('on_readings')->onDelete('cascade');
+            $table->foreign('kanji_id')->references('id')->on('kanji')->onDelete('cascade');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateOnreadingKanjiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('onreading_kanji');
+        Schema::dropIfExists('on_reading_kanji');
     }
 }

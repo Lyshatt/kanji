@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKunreadingsTable extends Migration
+class CreateKunReadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateKunreadingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kunreadings', function (Blueprint $table) {
+        Schema::create('kun_readings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('reading');
@@ -27,6 +27,6 @@ class CreateKunreadingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kunreadings');
+        Schema::dropIfExists('kun_readings');
     }
 }
