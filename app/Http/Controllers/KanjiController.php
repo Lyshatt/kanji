@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kanji;
 use App\Models\KunReading;
 use App\Models\OnReading;
+use App\Models\Tag;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -54,6 +55,7 @@ class KanjiController extends Controller
         $kunReadings = explode(',', $request->kunreadings);
         $onReadings = explode(',', $request->onreadings);
         $words = explode(',', $request->words);
+        $tags = explode(',', $request->tags);
 
         foreach ($kunReadings as $kunReading) {
             $existingKunReading = KunReading::where('reading', $kunReading)->first();
@@ -89,6 +91,18 @@ class KanjiController extends Controller
             }
 
             $kanji->words()->save($existingWord);
+        }
+
+        foreach ($tags as $tag) {
+            $existingTag = Tag::where('name', $tag)->first();
+
+            if(!$existingTag) {
+                $existingTag = new Tag();
+                $existingTag->name = $tag;
+                $existingTag->save();
+            }
+
+            $kanji->tags()->save($existingTag);
         }
 
         return view('pages.kanji.create');

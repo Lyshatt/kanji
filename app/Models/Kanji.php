@@ -16,6 +16,11 @@ class Kanji extends Model
         'mnemonic'
     ];
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'tag_kanji');
+    }
+
     public function kunReadings()
     {
         return $this->belongsToMany(KunReading::class, 'kun_reading_kanji');

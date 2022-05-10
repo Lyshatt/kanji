@@ -44,6 +44,11 @@
             <input id="words" name="words" type="text">
         </div>
 
+        <div>
+            <label for="tags" class="block">Tags</label>
+            <input id="tags" name="tags" type="text">
+        </div>
+
         <button type="submit">
             Submit
         </button>
