@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\KanjiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Generalcontroller::class, 'index']);
+
+Route::get('kanji/create', [KanjiController::class, 'create']);

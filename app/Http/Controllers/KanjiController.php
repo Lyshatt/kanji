@@ -23,7 +23,7 @@ class KanjiController extends Controller
      */
     public function create()
     {
-        return view('kanji.create')->with('test');
+        return view('pages.kanji.create');
     }
 
     /**
