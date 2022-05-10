@@ -10,6 +10,7 @@ class Word extends Model
     use HasFactory;
 
     protected $fillable = [
+        'word',
         'meaning',
         'reading'
     ];

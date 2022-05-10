@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kanji;
 use App\Models\KunReading;
 use App\Models\OnReading;
+use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -48,6 +49,8 @@ class KanjiController extends Controller
         $kanji->meaning = $request->meaning;
         $kanji->mnemonic = $request->mnemoinc;
 
+        $kanji->save();
+
         $kunReadings = explode(',', $request->kunreadings);
         $onReadings = explode(',', $request->onreadings);
         $words = explode(',', $request->words);
@@ -65,7 +68,7 @@ class KanjiController extends Controller
         }
 
         foreach ($onReadings as $onReading) {
-            $existingOnReading = KunReading::where('reading', $onReading)->first();
+            $existingOnReading = OnReading::where('reading', $onReading)->first();
 
             if(!$existingOnReading) {
                 $existingOnReading = new OnReading();
@@ -77,11 +80,11 @@ class KanjiController extends Controller
         }
 
         foreach ($words as $word) {
-            $existingWord = KunReading::where('reading', $word)->first();
+            $existingWord = Word::where('word', $word)->first();
 
             if(!$existingWord) {
-                $existingWord = new KunReading();
-                $existingWord->reading = $word;
+                $existingWord = new Word();
+                $existingWord->word = $word;
                 $existingWord->save();
             }
 
