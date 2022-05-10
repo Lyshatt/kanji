@@ -1,5 +1,5 @@
 @extends('templates.default')
 
 @section('content')
-    <div>landing page</div>
+    <h1 class="text-7xl text-center text-sky-900">Kanji</h1>
 @endsection
