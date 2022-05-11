@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\KanjiController;
+use App\Http\Controllers\LessonController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ Route::get('/', [Generalcontroller::class, 'index']);
 
 Route::get('kanji/create', [KanjiController::class, 'create']);
 Route::post('kanji/store', [KanjiController::class, 'store']);
+
+Route::post('lesson', [LessonController::class, 'index'] );

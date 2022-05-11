@@ -15,6 +15,6 @@ class Tag extends Model
 
     public function kanji()
     {
-        return $this->belongsToMany(Kanji::class);
+        return $this->belongsToMany(Kanji::class, 'tag_kanji');
     }
 }

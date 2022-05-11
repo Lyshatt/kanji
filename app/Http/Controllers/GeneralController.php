@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class GeneralController extends Controller
@@ -12,6 +13,10 @@ class GeneralController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        $tags = Tag::all();
+
+        return view('pages.index')->with(
+            ['tags' => $tags]
+        );
     }
 }
