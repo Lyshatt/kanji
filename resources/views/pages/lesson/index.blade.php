@@ -1,12 +1,9 @@
 @extends('templates.default')
 
 @section('content')
-    @foreach($kanjiByTag as $tagKanjis)
-        {{$tagKanjis->name}}
-    @endforeach
 
     <div id="lesson-app">
-        <example-component></example-component>
+        <kanji-lesson :kanji='@json($kanjiByTag)'></kanji-lesson>
     </div>
 
     <script src="./js/lesson-app.js"></script>

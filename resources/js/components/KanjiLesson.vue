@@ -6,8 +6,12 @@
 
 <script>
     export default {
+        props: {
+            kanji: Array
+        },
+
         mounted() {
-            console.log('Component mounted.')
+            console.log(this.kanji)
         }
     }
 </script>

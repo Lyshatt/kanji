@@ -14,14 +14,17 @@ class LessonController extends Controller
      */
     public function index(Request $request)
     {
-        $kanjiByTag = [];
+        $allKanji = [];
         foreach ($request->tags as $tag) {
-            $dbTag = Tag::where('name', $tag)->with('kanji')->first();
-            $kanjiByTag[] = $dbTag;
+            $kanjiArray = Kanji::whereHas('tags', function($query) use ($tag) {
+                $query->where('name', $tag);
+            })->with('tags')->get()->toArray();
+
+            $allKanji = array_merge($allKanji, $kanjiArray);
         }
 
         return view('pages.lesson.index')->with(
-            ['kanjiByTag' => $kanjiByTag]
+            ['kanjiByTag' => $allKanji]
         );
 
     }
