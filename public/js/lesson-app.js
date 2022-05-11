@@ -18,12 +18,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    kanji: Array
+    kanjiStack: Array
+  },
+  data: function data() {
+    return {
+      activeKanji: ''
+    };
   },
   mounted: function mounted() {
-    console.log(this.kanji);
+    this.activeKanji = this.kanjiStack[0];
+    this.kanjiStack.shift();
+  },
+  computed: {},
+  methods: {
+    putOnStackAndNextKanji: function putOnStackAndNextKanji() {
+      this.kanjiStack.push(this.activeKanji);
+      this.activeKanji = this.kanjiStack[0];
+      this.kanjiStack.shift();
+    },
+    nextKanji: function nextKanji() {
+      this.activeKanji = this.kanjiStack[0];
+      this.kanjiStack.shift();
+    }
   }
 });
 
@@ -117,7 +142,19 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    example component\n")])
+  return _c("div", [
+    _c("div", [_vm._v("Remaining: " + _vm._s(_vm.kanjiStack.length))]),
+    _vm._v(" "),
+    _c("div", [_vm._v("\n        " + _vm._s(_vm.activeKanji) + "\n    ")]),
+    _vm._v(" "),
+    _c("div", [
+      _c("button", { on: { click: _vm.putOnStackAndNextKanji } }, [
+        _vm._v("again later"),
+      ]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.nextKanji } }, [_vm._v("i knew it!")]),
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
