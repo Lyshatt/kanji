@@ -5,8 +5,10 @@
         {{$tagKanjis->name}}
     @endforeach
 
-    <div id="app">
+    <div id="lesson-app">
         <example-component></example-component>
     </div>
+
+    <script src="./js/lesson-app.js"></script>
 
 @endsection

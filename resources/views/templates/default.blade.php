@@ -19,7 +19,7 @@
 <div class="container mx-auto">
     @yield('content')
 
-    <script src="/js/app.js"></script>
+    <script src="./js/app.js"></script>
 </div>
 
 </body>
