@@ -51,7 +51,6 @@
                             <div>Mnemonic</div>
                             <div>
                                 {{ activeKanji.mnemonic }}
-                                {{activeKanji}}
                             </div>
                         </div>
                     </div>

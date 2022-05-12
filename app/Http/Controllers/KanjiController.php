@@ -41,8 +41,8 @@ class KanjiController extends Controller
         $request->validate([
             'symbol' => 'required|unique:kanji',
             'meaning' => 'required',
-            'kunreadings' => 'required',
-            'onreadings' => 'required'
+            'kunreadings' => '',
+            'onreadings' => ''
         ]);
 
         $kanji = new Kanji();
@@ -90,8 +90,8 @@ class KanjiController extends Controller
     {
         $request->validate([
             'meaning' => 'required',
-            'kunreadings' => 'required',
-            'onreadings' => 'required'
+            'kunreadings' => '',
+            'onreadings' => ''
         ]);
 
         $kanji = Kanji::where('symbol', $symbol)->first();
@@ -127,10 +127,10 @@ class KanjiController extends Controller
         $kanji->words()->detach();
         $kanji->tags()->detach();
 
-        $kunReadings = explode(',', $request->kunreadings);
-        $onReadings = explode(',', $request->onreadings);
-        $words = explode(',', $request->words);
-        $tags = explode(',', $request->tags);
+        $kunReadings = array_filter(explode(',', $request->kunreadings));
+        $onReadings = array_filter( explode(',', $request->onreadings));
+        $words = array_filter(explode(',', $request->words));
+        $tags = array_filter(explode(',', $request->tags));
 
         foreach ($kunReadings as $kunReading) {
             $existingKunReading = KunReading::where('reading', $kunReading)->first();
