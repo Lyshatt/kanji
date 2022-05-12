@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Generalcontroller::class, 'index']);
 
-Route::get('kanji/create', [KanjiController::class, 'create']);
-Route::post('kanji/store', [KanjiController::class, 'store']);
+Route::get('/kanji/create', [KanjiController::class, 'create']);
+Route::post('/kanji/store', [KanjiController::class, 'store']);
+Route::get('/kanji/store', function () { return redirect('/kanji/create'); });
 
-Route::post('lesson', [LessonController::class, 'index'] );
+Route::post('/lesson', [LessonController::class, 'index'] );
+Route::get('/lesson', function () { return redirect('/'); });
