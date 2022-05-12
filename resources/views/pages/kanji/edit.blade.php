@@ -26,22 +26,22 @@
 
         <div>
             <label for="kunreadings" class="block">Kun-Readings</label>
-            <input class="w-full" id="kunreadings" name="kunreadings" type="text" value="@foreach($kanji->kunReadings as $kunReading){{$kunReading->reading}},@endforeach">
+            <input class="w-full" id="kunreadings" name="kunreadings" type="text" value="@foreach($kanji->kunReadings as $kunReading){{$kunReading->reading}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <div>
             <label for="onreadings" class="block">On-Readings</label>
-            <input class="w-full" id="onreadings" name="onreadings" type="text" value="@foreach($kanji->onReadings as $onReading){{$onReading->reading}},@endforeach">
+            <input class="w-full" id="onreadings" name="onreadings" type="text" value="@foreach($kanji->onReadings as $onReading){{$onReading->reading}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <div>
             <label for="words" class="block">Words</label>
-            <input class="w-full" id="words" name="words" type="text" value="@foreach($kanji->words as $word){{$word->word}},@endforeach">
+            <input class="w-full" id="words" name="words" type="text" value="@foreach($kanji->words as $word){{$word->word}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <div>
             <label for="tags" class="block">Tags</label>
-            <input class="w-full" id="tags" name="tags" type="text" value="@foreach($kanji->tags as $tag){{$tag->name}},@endforeach">
+            <input class="w-full" id="tags" name="tags" type="text" value="@foreach($kanji->tags as $tag){{$tag->name}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <button class="mt-3 bg-sky-900 px-2 text-white rounded" type="submit">
