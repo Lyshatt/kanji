@@ -16,11 +16,17 @@
 </head>
 
 <body class="bg-gray-100">
-<div class="container mx-auto">
-    @yield('content')
+
+    <div class="bg-sky-900">
+        <div class="container mx-auto p-5">
+            <h1 class="text-3xl text-white">漢字の勉強</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-5">
+        @yield('content')
+    </div>
 
     <script src="./js/app.js"></script>
-</div>
-
 </body>
 </html>
