@@ -46,64 +46,7 @@ class KanjiController extends Controller
         ]);
 
         $kanji = new Kanji();
-        $kanji->symbol = $request->symbol;
-        $kanji->meaning = $request->meaning;
-        $kanji->mnemonic = $request->mnemoinc;
-
-        $kanji->save();
-
-        $kunReadings = explode(',', $request->kunreadings);
-        $onReadings = explode(',', $request->onreadings);
-        $words = explode(',', $request->words);
-        $tags = explode(',', $request->tags);
-
-        foreach ($kunReadings as $kunReading) {
-            $existingKunReading = KunReading::where('reading', $kunReading)->first();
-
-            if(!$existingKunReading) {
-                $existingKunReading = new KunReading();
-                $existingKunReading->reading = $kunReading;
-                $existingKunReading->save();
-            }
-
-            $kanji->kunReadings()->save($existingKunReading);
-        }
-
-        foreach ($onReadings as $onReading) {
-            $existingOnReading = OnReading::where('reading', $onReading)->first();
-
-            if(!$existingOnReading) {
-                $existingOnReading = new OnReading();
-                $existingOnReading->reading = $onReading;
-                $existingOnReading->save();
-            }
-
-            $kanji->onReadings()->save($existingOnReading);
-        }
-
-        foreach ($words as $word) {
-            $existingWord = Word::where('word', $word)->first();
-
-            if(!$existingWord) {
-                $existingWord = new Word();
-                $existingWord->word = $word;
-                $existingWord->save();
-            }
-
-            $kanji->words()->save($existingWord);
-        }
-
-        foreach ($tags as $tag) {
-            $existingTag = Tag::where('name', $tag)->first();
-
-            if(!$existingTag) {
-                $existingTag = new Tag();
-                $existingTag->name = $tag;
-                $existingTag->save();
-            }
-
-            $kanji->tags()->save($existingTag);
-        }
+        $this->saveKanji($kanji, $request);
 
         return view('pages.kanji.create');
     }
@@ -123,23 +66,42 @@ class KanjiController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($symbol)
     {
-        //
+        $kanji = Kanji::where('symbol', $symbol)->with('tags','kunReadings','onReadings','words')->first();
+
+        if($kanji) {
+            return view('pages.kanji.edit')->with(
+                ['kanji' => $kanji]
+            );
+        } else {
+            return redirect('/');
+            //return redirect()->back()->withErrors(['msg' => 'Kanji not found']);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $symbol)
     {
-        //
+        $request->validate([
+            'meaning' => 'required',
+            'kunreadings' => 'required',
+            'onreadings' => 'required'
+        ]);
+
+        $kanji = Kanji::where('symbol', $symbol)->first();
+
+        if($kanji) {
+            $this->saveKanji($kanji, $request);
+        }
+
+
+        return redirect('/kanji/edit/' . $request->symbol);
     }
 
     /**
@@ -151,5 +113,77 @@ class KanjiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function saveKanji($kanji, $request) {
+        $kanji->symbol = $request->symbol;
+        $kanji->meaning = $request->meaning;
+        $kanji->mnemonic = $request->mnemonic;
+
+        $kanji->save();
+
+        $kanji->kunReadings()->detach();
+        $kanji->onReadings()->detach();
+        $kanji->words()->detach();
+        $kanji->tags()->detach();
+
+        $kunReadings = explode(',', $request->kunreadings);
+        $onReadings = explode(',', $request->onreadings);
+        $words = explode(',', $request->words);
+        $tags = explode(',', $request->tags);
+
+        foreach ($kunReadings as $kunReading) {
+            $existingKunReading = KunReading::where('reading', $kunReading)->first();
+
+            if($existingKunReading) {
+                $kanji->kunReadings()->attach($existingKunReading);
+            } else {
+                $existingKunReading = new KunReading();
+                $existingKunReading->reading = $kunReading;
+                $existingKunReading->save();
+                $kanji->kunReadings()->save($existingKunReading);
+            }
+        }
+
+        foreach ($onReadings as $onReading) {
+            $existingOnReading = OnReading::where('reading', $onReading)->first();
+
+            if($existingOnReading) {
+                $kanji->onReadings()->attach($existingOnReading);
+            } else {
+                $existingOnReading = new OnReading();
+                $existingOnReading->reading = $onReading;
+                $existingOnReading->save();
+                $kanji->onReadings()->save($existingOnReading);
+            }
+        }
+
+        foreach ($words as $word) {
+
+
+            $existingWord = Word::where('word', $word)->first();
+
+            if($existingWord) {
+                $kanji->words()->attach($existingWord);
+            } else {
+                $existingWord = new Word();
+                $existingWord->word = $word;
+                $existingWord->save();
+                $kanji->words()->save($existingWord);
+            }
+        }
+
+        foreach ($tags as $tag) {
+            $existingTag = Tag::where('name', $tag)->first();
+
+            if($existingTag) {
+                $kanji->tags()->attach($existingTag);
+            } else {
+                $existingTag = new Tag();
+                $existingTag->name = $tag;
+                $existingTag->save();
+                $kanji->tags()->save($existingTag);
+            }
+        }
     }
 }

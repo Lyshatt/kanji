@@ -16,7 +16,7 @@ class CreateKunReadingsTable extends Migration
         Schema::create('kun_readings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('reading');
+            $table->string('reading')->unique();
         });
     }
 

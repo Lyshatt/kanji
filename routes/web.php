@@ -18,16 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth::routes();
+Route::get('/login', [LoginController::class, 'showLoginForm']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/', [Generalcontroller::class, 'index']);
 
 Route::get('/kanji/create', [KanjiController::class, 'create'])->middleware('auth');
-Route::post('/kanji/store', [KanjiController::class, 'store'])->middleware('auth');;
-Route::get('/kanji/store', function () { return redirect('/kanji/create'); });
+Route::post('/kanji/create', [KanjiController::class, 'store'])->middleware('auth');
 
-Route::post('/lesson', [LessonController::class, 'index'] );
+Route::get('/kanji/edit/{symbol}', [KanjiController::class, 'edit'])->middleware('auth');
+Route::post('/kanji/edit/{symbol}', [KanjiController::class, 'update'])->middleware('auth');
+
 Route::get('/lesson', function () { return redirect('/'); });
-
-Route::get('/login', [LoginController::class, 'showLoginForm']);
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::post('/lesson', [LessonController::class, 'index'] );

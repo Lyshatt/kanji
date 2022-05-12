@@ -3,7 +3,11 @@
 @section('content')
     <form  method="post" action="/lesson" enctype="multipart/form-data">@csrf
         <div class="bg-white rounded shadow p-3 mb-4">
-            <div class="text-sky-900 text-2xl mb-4">Select which Kanji you want to practise</div>
+            <div class="text-sky-900 text-2xl mb-4">Select which Kanji you want to practise,</div>
+
+            @if($errors->any())
+                <div class="text-red-900 mb-4">{{$errors->first()}}</div>
+            @endif
 
             <div class="flex">
                 @foreach($tags as $tag)

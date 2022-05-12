@@ -61,6 +61,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
@@ -203,83 +230,163 @@ var render = function () {
       _vm._v(" "),
       _c("div", { staticClass: "pl-1" }, [
         _vm._v(
-          _vm._s(this.initialKanjiAmount - this.kanjiStack.length) +
+          _vm._s(_vm.initialKanjiAmount - _vm.kanjiStack.length) +
             "/" +
-            _vm._s(this.initialKanjiAmount)
+            _vm._s(_vm.initialKanjiAmount)
         ),
       ]),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
-      _c("div", { staticClass: "flex" }, [
-        _c("div", { staticClass: "w-1/3" }, [
-          _c("div", { staticClass: "text-9xl" }, [
-            _vm._v(_vm._s(_vm.activeKanji.symbol)),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-2/3" }, [
-          _c("div", [
-            _c("div", [_vm._v("Kun Readings")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              _vm._l(_vm.activeKanji.kun_readings, function (kunReading) {
-                return _c(
-                  "span",
-                  { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                  [
+    _vm.kanjiStack.length > 0
+      ? _c("div", [
+          _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
+            _c("div", { staticClass: "flex" }, [
+              _c("div", { staticClass: "w-1/3" }, [
+                _c("div", { staticClass: "text-9xl" }, [
+                  _vm._v(_vm._s(_vm.activeKanji.symbol)),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-2/3" }, [
+                _c("div", [
+                  _c("div", [_vm._v("Meaning")]),
+                  _vm._v(" "),
+                  _c("div", [
                     _vm._v(
                       "\n                            " +
-                        _vm._s(kunReading.reading) +
+                        _vm._s(_vm.activeKanji.meaning) +
                         "\n                        "
                     ),
-                  ]
-                )
-              }),
-              0
-            ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("div", [_vm._v("Kun Readings")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    _vm._l(_vm.activeKanji.kun_readings, function (kunReading) {
+                      return _c(
+                        "span",
+                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(kunReading.reading) +
+                              "\n                        "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("div", [_vm._v("On Readings")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    _vm._l(_vm.activeKanji.on_readings, function (onReading) {
+                      return _c(
+                        "span",
+                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(onReading.reading) +
+                              "\n                        "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("div", [_vm._v("Words")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    _vm._l(_vm.activeKanji.words, function (word) {
+                      return _c(
+                        "span",
+                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(word.word) +
+                              "\n                        "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("div", [_vm._v("Mnemonic")]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.activeKanji.mnemonic) +
+                        "\n                            " +
+                        _vm._s(_vm.activeKanji) +
+                        "\n                        "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
           ]),
           _vm._v(" "),
-          _c("div", [
-            _c("div", [_vm._v("On Readings")]),
+          _c("div", { staticClass: "flex justify-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "bg-sky-900 text-white px-2 mr-1 rounded",
+                on: { click: _vm.putOnStackAndNextKanji },
+              },
+              [_vm._v("again later")]
+            ),
             _vm._v(" "),
             _c(
-              "div",
-              _vm._l(_vm.activeKanji.on_readings, function (onReading) {
-                return _c(
-                  "span",
-                  { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                  [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(onReading.reading) +
-                        "\n                        "
-                    ),
-                  ]
-                )
-              }),
-              0
+              "button",
+              {
+                staticClass: "bg-sky-900 text-white px-2 ml-1 rounded",
+                on: { click: _vm.nextKanji },
+              },
+              [_vm._v("I knew it!")]
             ),
           ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _vm._v("\n            " + _vm._s(_vm.activeKanji) + "\n        "),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("button", { on: { click: _vm.putOnStackAndNextKanji } }, [
-          _vm._v("again later"),
-        ]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.nextKanji } }, [_vm._v("i knew it!")]),
-      ]),
-    ]),
+        ])
+      : _c("div", [_vm._m(0)]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
+      _vm._v(
+        "\n        You finished the lesson. How was ist? You can start a new lesson from "
+      ),
+      _c(
+        "a",
+        {
+          staticClass: "font-bold text-sky-900 hover:text-sky-700",
+          attrs: { href: "/" },
+        },
+        [_vm._v("here")]
+      ),
+      _vm._v(".\n        "),
+    ])
+  },
+]
 render._withStripped = true
 
 

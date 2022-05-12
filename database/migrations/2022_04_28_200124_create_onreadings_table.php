@@ -16,7 +16,7 @@ class CreateOnReadingsTable extends Migration
         Schema::create('on_readings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('reading');
+            $table->string('reading')->unique();
         });
     }
 

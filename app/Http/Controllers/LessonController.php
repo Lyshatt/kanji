@@ -15,17 +15,22 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $allKanji = [];
-        foreach ($request->tags as $tag) {
-            $kanjiArray = Kanji::whereHas('tags', function($query) use ($tag) {
-                $query->where('name', $tag);
-            })->with('tags')->with('kunReadings')->with('onReadings')->get()->toArray();
+        if($request->tags) {
+            foreach ($request->tags as $tag) {
+                $kanjiArray = Kanji::whereHas('tags', function($query) use ($tag) {
+                    $query->where('name', $tag);
+                })->with('tags','kunReadings','onReadings','words')->get()->toArray();
 
-            $allKanji = array_merge($allKanji, $kanjiArray);
+                $allKanji = array_merge($allKanji, $kanjiArray);
+            }
+
+            return view('pages.lesson.index')->with(
+                ['kanjiByTag' => $allKanji]
+            );
+        } else {
+            return redirect('/')->withErrors(['msg' => 'You must select at least one tag.']);
         }
 
-        return view('pages.lesson.index')->with(
-            ['kanjiByTag' => $allKanji]
-        );
 
     }
 }

@@ -16,7 +16,7 @@ class CreateKanjiTable extends Migration
         Schema::create('kanji', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('symbol', 1);
+            $table->string('symbol', 1)->unique();
             $table->text('meaning');
             $table->text('mnemonic')->nullable();
         });
