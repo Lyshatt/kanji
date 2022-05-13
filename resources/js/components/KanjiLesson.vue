@@ -13,44 +13,62 @@
         <div v-if="kanjiStack.length > 0">
             <div class="bg-white rounded shadow p-3 mb-4">
                 <div class="flex">
-                    <div class="w-1/3">
-                        <div class="text-9xl">{{ activeKanji.symbol }}</div>
+                    <div class="w-1/3 flex items-center justify-center bg-sky-900 rounded text-white">
+                        <div class="text-9xl text-center">{{ activeKanji.symbol }}</div>
                     </div>
-                    <div class="w-2/3">
-                        <div>
-                            <div>Meaning</div>
-                            <div>
-                                {{ activeKanji.meaning }}
+                    <div class="w-2/3 pl-3">
+                        <div class="mb-3">
+                            <div class="flex justify-between">
+                                <div class="text-xl mb-1">Meaning</div>
+                                <button class="bg-sky-900 text-white rounded my-1 px-1" @click="revealAll">reveal all</button>
+                            </div>
+                            <div class="relative">
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
+                                <div class="flex">
+                                    {{ activeKanji.meaning }}
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>Kun Readings</div>
-                            <div>
-                            <span class="mr-1 my-1 p-1 bg-gray-100" v-for="kunReading in activeKanji.kun_readings">
-                                {{ kunReading.reading }}
-                            </span>
+                        <div class="mb-3" v-if="activeKanji.kun_readings.length > 0">
+                            <div class="text-xl mb-1">Kun-Readings</div>
+                            <div class="relative">
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
+                                <div>
+                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="kunReading in activeKanji.kun_readings">
+                                    {{ kunReading.reading }}
+                                </span>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>On Readings</div>
-                            <div>
-                            <span class="mr-1 my-1 p-1 bg-gray-100" v-for="onReading in activeKanji.on_readings">
-                                {{ onReading.reading }}
-                            </span>
+                        <div class="mb-3" v-if="activeKanji.on_readings.length > 0">
+                            <div class="text-xl mb-1">On-Readings</div>
+                            <div class="relative">
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
+                                <div>
+                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="onReading in activeKanji.on_readings">
+                                    {{ onReading.reading }}
+                                </span>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>Words</div>
-                            <div>
-                            <span class="mr-1 my-1 p-1 bg-gray-100" v-for="word in activeKanji.words">
-                                {{ word.word }}
-                            </span>
+                        <div class="mb-3"  v-if="activeKanji.words.length > 0">
+                            <div class="text-xl mb-1">Words</div>
+                            <div class="relative">
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
+                                <div>
+                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="word in activeKanji.words">
+                                    {{ word.word }}
+                                </span>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>Mnemonic</div>
-                            <div>
-                                {{ activeKanji.mnemonic }}
+                        <div  v-if="activeKanji.mnemonic.length > 0">
+                            <div class="text-xl mb-1">Mnemonic</div>
+                            <div class="relative">
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
+                                <div>
+                                    {{ activeKanji.mnemonic }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -81,7 +99,12 @@
 
         data() {
             return {
-                activeKanji: '',
+                activeKanji: {
+                    kun_readings: [],
+                    on_readings: [],
+                    words: [],
+                    mnemonic: ''
+                },
                 initialKanjiAmount: 0
             }
         },
@@ -95,6 +118,12 @@
 
         methods: {
             putOnStackAndNextKanji() {
+                document.querySelectorAll('.hider-box').forEach(function (element) {
+                    if(element.classList.contains("hidden")) {
+                        element.classList.remove("hidden");
+                    }
+                });
+
                 this.kanjiStack.shift();
                 this.kanjiStack.push(this.activeKanji);
                 this.activeKanji = this.kanjiStack[0];
@@ -102,12 +131,32 @@
             },
 
             nextKanji() {
+                document.querySelectorAll('.hider-box').forEach(function (element) {
+                    if(element.classList.contains("hidden")) {
+                        element.classList.remove("hidden");
+                    }
+                });
+
                 this.kanjiStack.shift();
                 this.activeKanji = this.kanjiStack[0];
             },
 
             getProgressPercentage() {
                 return 100 - (this.kanjiStack.length / this.initialKanjiAmount * 100);
+            },
+
+            removeSelf(e) {
+                if(!e.target.classList.contains("hidden")) {
+                    e.target.classList.add("hidden");
+                }
+            },
+
+            revealAll() {
+                document.querySelectorAll('.hider-box').forEach(function (element) {
+                    if(!element.classList.contains("hidden")) {
+                        element.classList.add("hidden");
+                    }
+                });
             }
         }
     }
