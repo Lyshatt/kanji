@@ -56,9 +56,13 @@ class WordController extends Controller
     {
         $word = Word::find($id);
 
-        return view('pages.word.edit')->with([
-            'word' => $word
-        ]);
+        if($word) {
+            return view('pages.word.edit')->with([
+                'word' => $word
+            ]);
+        } else {
+            return redirect('/backend');
+        }
     }
 
     /**
