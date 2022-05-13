@@ -25,6 +25,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/', [Generalcontroller::class, 'index']);
+Route::get('/impressum', [Generalcontroller::class, 'impressum']);
 
 Route::get('/kanji/create', [KanjiController::class, 'create'])->middleware('auth');
 Route::post('/kanji/create', [KanjiController::class, 'store'])->middleware('auth');

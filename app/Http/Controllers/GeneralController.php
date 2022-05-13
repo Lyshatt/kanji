@@ -19,4 +19,9 @@ class GeneralController extends Controller
             ['tags' => $tags]
         );
     }
+
+    public function impressum()
+    {
+        return view('pages.impressum');
+    }
 }

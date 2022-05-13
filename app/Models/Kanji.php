@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kanji extends Model
 {
     use HasFactory;
-    protected $table = 'Kanji';
+    protected $table = 'kanji';
 
     protected $fillable = [
         'symbol',

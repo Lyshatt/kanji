@@ -15,16 +15,22 @@
 
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 flex flex-col min-h-screen">
 
     <div class="bg-sky-900">
         <div class="container mx-auto p-5">
-            <h1 class="text-3xl text-white"><a href="/">漢字の勉強</a></h1>
+            <h1 class="text-3xl text-white"><a href="/">天色</a></h1>
         </div>
     </div>
 
-    <div class="container mx-auto p-5">
+    <div class="container mx-auto p-5 flex-1">
         @yield('content')
+    </div>
+
+    <div class="bg-sky-900 text-white">
+        <div class="container mx-auto px-5 py-1">
+            <a href="/impressum">Impressum</a>
+        </div>
     </div>
 
     <script src="/js/app.js"></script>

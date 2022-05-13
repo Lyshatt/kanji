@@ -88,13 +88,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
   },
   data: function data() {
     return {
-      activeKanji: '',
+      activeKanji: {
+        kun_readings: [],
+        on_readings: [],
+        words: [],
+        mnemonic: ''
+      },
       initialKanjiAmount: 0
     };
   },
@@ -105,16 +127,38 @@ __webpack_require__.r(__webpack_exports__);
   computed: {},
   methods: {
     putOnStackAndNextKanji: function putOnStackAndNextKanji() {
+      document.querySelectorAll('.hider-box').forEach(function (element) {
+        if (element.classList.contains("hidden")) {
+          element.classList.remove("hidden");
+        }
+      });
       this.kanjiStack.shift();
       this.kanjiStack.push(this.activeKanji);
       this.activeKanji = this.kanjiStack[0];
     },
     nextKanji: function nextKanji() {
+      document.querySelectorAll('.hider-box').forEach(function (element) {
+        if (element.classList.contains("hidden")) {
+          element.classList.remove("hidden");
+        }
+      });
       this.kanjiStack.shift();
       this.activeKanji = this.kanjiStack[0];
     },
     getProgressPercentage: function getProgressPercentage() {
       return 100 - this.kanjiStack.length / this.initialKanjiAmount * 100;
+    },
+    removeSelf: function removeSelf(e) {
+      if (!e.target.classList.contains("hidden")) {
+        e.target.classList.add("hidden");
+      }
+    },
+    revealAll: function revealAll() {
+      document.querySelectorAll('.hider-box').forEach(function (element) {
+        if (!element.classList.contains("hidden")) {
+          element.classList.add("hidden");
+        }
+      });
     }
   }
 });
@@ -241,104 +285,184 @@ var render = function () {
       ? _c("div", [
           _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
             _c("div", { staticClass: "flex" }, [
-              _c("div", { staticClass: "w-1/3" }, [
-                _c("div", { staticClass: "text-9xl" }, [
-                  _vm._v(_vm._s(_vm.activeKanji.symbol)),
-                ]),
-              ]),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "w-1/3 flex items-center justify-center bg-sky-900 rounded text-white",
+                },
+                [
+                  _c("div", { staticClass: "text-9xl text-center" }, [
+                    _vm._v(_vm._s(_vm.activeKanji.symbol)),
+                  ]),
+                ]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "w-2/3" }, [
-                _c("div", [
-                  _c("div", [_vm._v("Meaning")]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.activeKanji.meaning) +
-                        "\n                        "
+              _c("div", { staticClass: "w-2/3 pl-3" }, [
+                _c("div", { staticClass: "mb-3" }, [
+                  _c("div", { staticClass: "flex justify-between" }, [
+                    _c("div", { staticClass: "text-xl mb-1" }, [
+                      _vm._v("Meaning"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "bg-sky-900 text-white rounded my-1 px-1",
+                        on: { click: _vm.revealAll },
+                      },
+                      [_vm._v("reveal all")]
                     ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "relative" }, [
+                    _c("div", {
+                      staticClass:
+                        "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                      on: { click: _vm.removeSelf },
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.activeKanji.meaning) +
+                          "\n                            "
+                      ),
+                    ]),
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c("div", [_vm._v("Kun Readings")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    _vm._l(_vm.activeKanji.kun_readings, function (kunReading) {
-                      return _c(
-                        "span",
-                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(kunReading.reading) +
-                              "\n                        "
+                _vm.activeKanji.kun_readings.length > 0
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c("div", { staticClass: "text-xl mb-1" }, [
+                        _vm._v("Kun-Readings"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "relative" }, [
+                        _c("div", {
+                          staticClass:
+                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                          on: { click: _vm.removeSelf },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          _vm._l(
+                            _vm.activeKanji.kun_readings,
+                            function (kunReading) {
+                              return _c(
+                                "span",
+                                { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(kunReading.reading) +
+                                      "\n                            "
+                                  ),
+                                ]
+                              )
+                            }
                           ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                ]),
+                          0
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("div", [
-                  _c("div", [_vm._v("On Readings")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    _vm._l(_vm.activeKanji.on_readings, function (onReading) {
-                      return _c(
-                        "span",
-                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(onReading.reading) +
-                              "\n                        "
+                _vm.activeKanji.on_readings.length > 0
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c("div", { staticClass: "text-xl mb-1" }, [
+                        _vm._v("On-Readings"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "relative" }, [
+                        _c("div", {
+                          staticClass:
+                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                          on: { click: _vm.removeSelf },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          _vm._l(
+                            _vm.activeKanji.on_readings,
+                            function (onReading) {
+                              return _c(
+                                "span",
+                                { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(onReading.reading) +
+                                      "\n                            "
+                                  ),
+                                ]
+                              )
+                            }
                           ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                ]),
+                          0
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("div", [
-                  _c("div", [_vm._v("Words")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    _vm._l(_vm.activeKanji.words, function (word) {
-                      return _c(
-                        "span",
-                        { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                        [
+                _vm.activeKanji.words.length > 0
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c("div", { staticClass: "text-xl mb-1" }, [
+                        _vm._v("Words"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "relative" }, [
+                        _c("div", {
+                          staticClass:
+                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                          on: { click: _vm.removeSelf },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          _vm._l(_vm.activeKanji.words, function (word) {
+                            return _c(
+                              "span",
+                              { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(word.word) +
+                                    "\n                            "
+                                ),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.activeKanji.mnemonic.length > 0
+                  ? _c("div", [
+                      _c("div", { staticClass: "text-xl mb-1" }, [
+                        _vm._v("Mnemonic"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "relative" }, [
+                        _c("div", {
+                          staticClass:
+                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                          on: { click: _vm.removeSelf },
+                        }),
+                        _vm._v(" "),
+                        _c("div", [
                           _vm._v(
-                            "\n                            " +
-                              _vm._s(word.word) +
-                              "\n                        "
+                            "\n                                " +
+                              _vm._s(_vm.activeKanji.mnemonic) +
+                              "\n                            "
                           ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("div", [_vm._v("Mnemonic")]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.activeKanji.mnemonic) +
-                        "\n                            " +
-                        _vm._s(_vm.activeKanji) +
-                        "\n                        "
-                    ),
-                  ]),
-                ]),
+                        ]),
+                      ]),
+                    ])
+                  : _vm._e(),
               ]),
             ]),
           ]),
