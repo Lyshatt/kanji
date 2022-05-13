@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\BackendController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\KanjiController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\WordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +32,10 @@ Route::post('/kanji/create', [KanjiController::class, 'store'])->middleware('aut
 Route::get('/kanji/edit/{symbol}', [KanjiController::class, 'edit'])->middleware('auth');
 Route::post('/kanji/edit/{symbol}', [KanjiController::class, 'update'])->middleware('auth');
 
+Route::get('/word/edit/{id}', [WordController::class, 'edit'])->middleware('auth');
+Route::post('/word/edit/{id}', [WordController::class, 'update'])->middleware('auth');
+
 Route::get('/lesson', function () { return redirect('/'); });
 Route::post('/lesson', [LessonController::class, 'index'] );
+
+Route::get('/backend', [BackendController::class, 'index'] )->middleware('auth');
