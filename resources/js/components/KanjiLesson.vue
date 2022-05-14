@@ -20,7 +20,7 @@
                         <div class="mb-3">
                             <div class="flex justify-between">
                                 <div class="text-xl mb-1">Meaning</div>
-                                <button class="bg-sky-900 text-white rounded my-1 px-1" @click="revealAll">reveal all</button>
+                                <button class="bg-sky-900 text-white text-xs rounded my-1 px-2" @click="revealAll">reveal all</button>
                             </div>
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
@@ -54,11 +54,15 @@
                         <div class="mb-3"  v-if="activeKanji.words.length > 0">
                             <div class="text-xl mb-1">Words</div>
                             <div class="relative">
-                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
-                                <div>
-                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="word in activeKanji.words">
-                                    {{ word.word }}
-                                </span>
+                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer z-10" @click="removeSelf"></div>
+                                <div class="words">
+                                    <div class="word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1" v-for="word in activeKanji.words">
+                                        <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="word.reading || word.meaning">
+                                            <div>{{word.reading}}</div>
+                                            <div>{{word.meaning}}</div>
+                                        </div>
+                                        <div class="word">{{ word.word }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,8 +80,8 @@
             </div>
 
             <div class="flex justify-center">
-                <button class="bg-sky-900 text-white px-2 mr-1 rounded" @click="putOnStackAndNextKanji">again later</button>
-                <button class="bg-sky-900 text-white px-2 ml-1 rounded" @click="nextKanji">I knew it!</button>
+                <button class="bg-sky-900 text-white px-2 py-1 mr-1 rounded" @click="putOnStackAndNextKanji">again later</button>
+                <button class="bg-sky-900 text-white px-2 py-1 ml-1 rounded" @click="nextKanji">I knew it!</button>
             </div>
         </div>
 
@@ -112,6 +116,11 @@
         mounted() {
             this.activeKanji = this.kanjiStack[0];
             this.initialKanjiAmount = this.kanjiStack.length;
+
+        },
+
+        updated() {
+            this.registerWordContainerListener();
         },
 
         computed: {},
@@ -155,6 +164,31 @@
                 document.querySelectorAll('.hider-box').forEach(function (element) {
                     if(!element.classList.contains("hidden")) {
                         element.classList.add("hidden");
+                    }
+                });
+            },
+
+            registerWordContainerListener() {
+                let containerOfAllWords = document.querySelector('.words');
+                let allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
+
+                allContainersOfSingleWords.forEach(function (element) {
+                    let word = element.querySelector('.word');
+                    let wordData = element.querySelector('.word-data');
+
+                    if(wordData) {
+                        word.addEventListener('mouseover', function() {
+                            console.log('mouseover on' + word);
+                            if(wordData.classList.contains("hidden")) {
+                                wordData.classList.remove("hidden");
+                            }
+                        });
+                        word.addEventListener('mouseout', function() {
+                            console.log('mouseout on' + word);
+                            if(!wordData.classList.contains("hidden")) {
+                                wordData.classList.add("hidden");
+                            }
+                        });
                     }
                 });
             }

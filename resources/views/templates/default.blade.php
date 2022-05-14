@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>天色 - Kanji learning</title>
 
     <!-- Styles -->
     <style>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="bg-sky-900 text-white">
-        <div class="container mx-auto px-5 py-1">
+        <div class="container mx-auto px-5 py-2">
             <a href="/impressum">Impressum</a>
         </div>
     </div>

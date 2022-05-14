@@ -105,6 +105,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
@@ -123,6 +127,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.activeKanji = this.kanjiStack[0];
     this.initialKanjiAmount = this.kanjiStack.length;
+  },
+  updated: function updated() {
+    this.registerWordContainerListener();
   },
   computed: {},
   methods: {
@@ -157,6 +164,31 @@ __webpack_require__.r(__webpack_exports__);
       document.querySelectorAll('.hider-box').forEach(function (element) {
         if (!element.classList.contains("hidden")) {
           element.classList.add("hidden");
+        }
+      });
+    },
+    registerWordContainerListener: function registerWordContainerListener() {
+      var containerOfAllWords = document.querySelector('.words');
+      var allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
+      allContainersOfSingleWords.forEach(function (element) {
+        var word = element.querySelector('.word');
+        var wordData = element.querySelector('.word-data');
+
+        if (wordData) {
+          word.addEventListener('mouseover', function () {
+            console.log('mouseover on' + word);
+
+            if (wordData.classList.contains("hidden")) {
+              wordData.classList.remove("hidden");
+            }
+          });
+          word.addEventListener('mouseout', function () {
+            console.log('mouseout on' + word);
+
+            if (!wordData.classList.contains("hidden")) {
+              wordData.classList.add("hidden");
+            }
+          });
         }
       });
     }
@@ -308,7 +340,8 @@ var render = function () {
                     _c(
                       "button",
                       {
-                        staticClass: "bg-sky-900 text-white rounded my-1 px-1",
+                        staticClass:
+                          "bg-sky-900 text-white text-xs rounded my-1 px-2",
                         on: { click: _vm.revealAll },
                       },
                       [_vm._v("reveal all")]
@@ -415,22 +448,49 @@ var render = function () {
                       _c("div", { staticClass: "relative" }, [
                         _c("div", {
                           staticClass:
-                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
+                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer z-10",
                           on: { click: _vm.removeSelf },
                         }),
                         _vm._v(" "),
                         _c(
                           "div",
+                          { staticClass: "words" },
                           _vm._l(_vm.activeKanji.words, function (word) {
                             return _c(
-                              "span",
-                              { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                              "div",
+                              {
+                                staticClass:
+                                  "word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1",
+                              },
                               [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(word.word) +
-                                    "\n                            "
-                                ),
+                                word.reading || word.meaning
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center",
+                                        staticStyle: {
+                                          transform: "translate(-50%, -100%)",
+                                          top: "-5px",
+                                          left: "50%",
+                                          width: "max-content",
+                                        },
+                                      },
+                                      [
+                                        _c("div", [
+                                          _vm._v(_vm._s(word.reading)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", [
+                                          _vm._v(_vm._s(word.meaning)),
+                                        ]),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "word" }, [
+                                  _vm._v(_vm._s(word.word)),
+                                ]),
                               ]
                             )
                           }),
@@ -471,7 +531,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "bg-sky-900 text-white px-2 mr-1 rounded",
+                staticClass: "bg-sky-900 text-white px-2 py-1 mr-1 rounded",
                 on: { click: _vm.putOnStackAndNextKanji },
               },
               [_vm._v("again later")]
@@ -480,7 +540,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "bg-sky-900 text-white px-2 ml-1 rounded",
+                staticClass: "bg-sky-900 text-white px-2 py-1 ml-1 rounded",
                 on: { click: _vm.nextKanji },
               },
               [_vm._v("I knew it!")]

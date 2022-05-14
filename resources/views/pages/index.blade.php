@@ -4,7 +4,7 @@
     <div class="text-xs mb-1 text-gray-500"> Welcome to 天色. This is just a tiny application to review some kanji.</div>
     <form  method="post" action="/lesson" enctype="multipart/form-data">@csrf
         <div class="bg-white rounded shadow p-3 mb-4">
-            <div class="text-sky-900 text-2xl mb-4">Select which Kanji you want to practise.</div>
+            <div class="text-sky-900 text-2xl mb-4">Select which Kanji you want to practice.</div>
 
             @if($errors->any())
                 <div class="text-red-900 mb-4">{{$errors->first()}}</div>

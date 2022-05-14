@@ -15,15 +15,13 @@
 
     <form method="post" action="/word/edit/{{$word->id}}" enctype="multipart/form-data">@csrf
         <div>
+            <label for="reading" class="block">Reading</label>
+            <textarea class="w-full" id="reading" name="reading" type="text">{{$word->reading}}</textarea>
+        </div>
+        <div>
             <label for="meaning" class="block">Meaning</label>
             <textarea class="w-full" id="meaning" name="meaning" type="text">{{$word->meaning}}</textarea>
         </div>
-
-        <div>
-            <label for="reading" class="block">Mnemonic</label>
-            <textarea class="w-full" id="reading" name="reading" type="text">{{$word->reading}}</textarea>
-        </div>
-
         <button class="mt-3 bg-sky-900 px-2 text-white rounded" type="submit">
             Submit
         </button>

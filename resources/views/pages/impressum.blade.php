@@ -9,10 +9,10 @@
                 Nothing is tracked and no user data is saved.
             </p>
             <p>
-                Nothing is sold, no advertisements are displayed, no money is earned.
+                Nothing is sold and no money is earned through any means.
             </p>
             <p>
-                If there is trouble, you can contact me through <a class="text-sky-900" href="mailto:thomas.meichelboeck@gmail.com">thomas.meichelboeck@gmail.com</a>
+                You can contact me through <a class="text-sky-900" href="mailto:thomas.meichelboeck@gmail.com">thomas.meichelboeck@gmail.com</a>
             </p>
         </div>
 @endsection
