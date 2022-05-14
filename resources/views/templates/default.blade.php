@@ -19,7 +19,7 @@
 
     <div class="bg-sky-900">
         <div class="container mx-auto p-5">
-            <h1 class="text-3xl text-white"><a href="/">天色</a></h1>
+            <h1 class="text-3xl text-white"><a href="/">漢字の勉強</a></h1>
         </div>
     </div>
 

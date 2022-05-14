@@ -1,7 +1,7 @@
 @extends('templates.default')
 
 @section('content')
-    <div class="text-xs mb-1 text-gray-500"> Welcome to 天色. This is just a tiny application to review some kanji.</div>
+    <div class="text-xs mb-1 text-gray-500"> Welcome. This is just a tiny application to review some kanji.</div>
     <form  method="post" action="/lesson" enctype="multipart/form-data">@csrf
         <div class="bg-white rounded shadow p-3 mb-4">
             <div class="text-sky-900 text-2xl mb-4">Select which Kanji you want to practice.</div>
