@@ -57,12 +57,12 @@
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer z-10" @click="removeSelf"></div>
                                 <div class="words">
                                     <div class="word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1" v-for="word in activeKanji.words">
-                                        <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="word.reading || word.meaning">
+                                        <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" :id="'word-data-' + word.id" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="word.reading || word.meaning">
                                             <div>{{word.reading}}</div>
                                             <div>{{word.meaning}}</div>
                                         </div>
 
-                                        <div class="word" :class="{'cursor-pointer': word.reading || word.meaning}">{{ word.word }}</div>
+                                        <div class="word" @click="toggleWordData(word.id)" :class="{'cursor-pointer': word.reading || word.meaning}">{{ word.word }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -121,13 +121,15 @@
         },
 
         updated() {
-            this.registerWordContainerListener();
+            // this.registerWordContainerListener();
         },
 
         computed: {},
 
         methods: {
             putOnStackAndNextKanji() {
+                this.closeOpenedWordData();
+
                 document.querySelectorAll('.hider-box').forEach(function (element) {
                     if(element.classList.contains("hidden")) {
                         element.classList.remove("hidden");
@@ -141,6 +143,8 @@
             },
 
             nextKanji() {
+                this.closeOpenedWordData();
+
                 document.querySelectorAll('.hider-box').forEach(function (element) {
                     if(element.classList.contains("hidden")) {
                         element.classList.remove("hidden");
@@ -169,25 +173,41 @@
                 });
             },
 
-            registerWordContainerListener() {
+           toggleWordData(id) {
+
+               this.closeOpenedWordData('word-data-' + id);
+               let wordData = document.querySelector('#word-data-' + id);
+
+               if(wordData) {
+                   if(wordData.classList.contains("hidden")) {
+                       wordData.classList.remove("hidden");
+                   } else if (!wordData.classList.contains("hidden")) {
+                       wordData.classList.add("hidden");
+                   }
+               }
+           },
+
+            closeOpenedWordData(except = null) {
                 let containerOfAllWords = document.querySelector('.words');
                 let allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
 
                 allContainersOfSingleWords.forEach(function (element) {
-                    let word = element.querySelector('.word');
-                    let wordData = element.querySelector('.word-data');
+                    let wordData;
+
+                    if(except) {
+                        wordData = element.querySelector('.word-data:not(#' + except + ')');
+                    } else {
+                        wordData = element.querySelector('.word-data');
+                    }
 
                     if(wordData) {
-                        word.addEventListener('mousedown', function() {
-                            if(wordData.classList.contains("hidden")) {
-                                wordData.classList.remove("hidden");
-                            } else if (!wordData.classList.contains("hidden")) {
-                                wordData.classList.add("hidden");
-                            }
-                        });
+                        if (!wordData.classList.contains("hidden")) {
+                            wordData.classList.add("hidden");
+                        }
                     }
                 });
-            }
+            },
+
         }
     }
 </script>
