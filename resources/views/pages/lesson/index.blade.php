@@ -6,6 +6,6 @@
         <kanji-lesson :kanji-stack='@json($kanjiByTag)'></kanji-lesson>
     </div>
 
-    <script src="./js/lesson-app.js"></script>
+    <script src="{{ asset('js/lesson-app.js') }}"></script>
 
 @endsection
