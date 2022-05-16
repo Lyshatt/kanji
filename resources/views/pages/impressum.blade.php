@@ -1,18 +1,17 @@
 @extends('templates.default')
 
 @section('content')
-        <div class="text-center text-lg">
+    <div class="flex justify-center">
+        <div class="text-center bg-white rounded p-2 shadow" style="width: 500px;">
             <p>
-                Hello. This is just a tiny, private website run by me, Thomas Meichelböck.
+                This is a privately developed website.
             </p>
             <p>
                 Nothing is tracked and no user data is saved.
             </p>
             <p>
-                Nothing is sold and no money is earned through any means.
-            </p>
-            <p>
                 You can contact me through <a class="text-sky-900" href="mailto:thomas.meichelboeck@gmail.com">thomas.meichelboeck@gmail.com</a>
             </p>
         </div>
+    </div>
 @endsection

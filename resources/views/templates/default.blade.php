@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>天色 - Kanji learning</title>
+    <title>漢字の勉強</title>
 
     <!-- Styles -->
     <style>
@@ -29,7 +29,7 @@
 
     <div class="bg-sky-900 text-white">
         <div class="container mx-auto px-5 py-2">
-            <a href="/impressum">Impressum</a>
+            <a href="/impressum">About</a>
         </div>
     </div>
 
