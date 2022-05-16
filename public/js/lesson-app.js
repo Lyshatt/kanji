@@ -109,6 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
@@ -175,17 +176,10 @@ __webpack_require__.r(__webpack_exports__);
         var wordData = element.querySelector('.word-data');
 
         if (wordData) {
-          word.addEventListener('mouseover', function () {
-            console.log('mouseover on' + word);
-
+          word.addEventListener('mousedown', function () {
             if (wordData.classList.contains("hidden")) {
               wordData.classList.remove("hidden");
-            }
-          });
-          word.addEventListener('mouseout', function () {
-            console.log('mouseout on' + word);
-
-            if (!wordData.classList.contains("hidden")) {
+            } else if (!wordData.classList.contains("hidden")) {
               wordData.classList.add("hidden");
             }
           });
@@ -316,21 +310,21 @@ var render = function () {
     _vm.kanjiStack.length > 0
       ? _c("div", [
           _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
-            _c("div", { staticClass: "flex" }, [
+            _c("div", { staticClass: "flex flex-col md:flex-row" }, [
               _c(
                 "div",
                 {
                   staticClass:
-                    "w-1/3 flex items-center justify-center bg-sky-900 rounded text-white",
+                    "w-full md:w-1/3 flex items-center justify-center bg-sky-900 rounded text-white mb-3 md:mb-0",
                 },
                 [
-                  _c("div", { staticClass: "text-9xl text-center" }, [
+                  _c("div", { staticClass: "text-9xl text-center my-5" }, [
                     _vm._v(_vm._s(_vm.activeKanji.symbol)),
                   ]),
                 ]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "w-2/3 pl-3" }, [
+              _c("div", { staticClass: "w-full md:w-2/3 md:pl-3" }, [
                 _c("div", { staticClass: "mb-3" }, [
                   _c("div", { staticClass: "flex justify-between" }, [
                     _c("div", { staticClass: "text-xl mb-1" }, [
@@ -488,9 +482,17 @@ var render = function () {
                                     )
                                   : _vm._e(),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "word" }, [
-                                  _vm._v(_vm._s(word.word)),
-                                ]),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "word",
+                                    class: {
+                                      "cursor-pointer":
+                                        word.reading || word.meaning,
+                                    },
+                                  },
+                                  [_vm._v(_vm._s(word.word))]
+                                ),
                               ]
                             )
                           }),

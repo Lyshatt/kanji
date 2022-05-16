@@ -12,11 +12,11 @@
 
         <div v-if="kanjiStack.length > 0">
             <div class="bg-white rounded shadow p-3 mb-4">
-                <div class="flex">
-                    <div class="w-1/3 flex items-center justify-center bg-sky-900 rounded text-white">
-                        <div class="text-9xl text-center">{{ activeKanji.symbol }}</div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-1/3 flex items-center justify-center bg-sky-900 rounded text-white mb-3 md:mb-0">
+                        <div class="text-9xl text-center my-5">{{ activeKanji.symbol }}</div>
                     </div>
-                    <div class="w-2/3 pl-3">
+                    <div class="w-full md:w-2/3 md:pl-3">
                         <div class="mb-3">
                             <div class="flex justify-between">
                                 <div class="text-xl mb-1">Meaning</div>
@@ -61,7 +61,8 @@
                                             <div>{{word.reading}}</div>
                                             <div>{{word.meaning}}</div>
                                         </div>
-                                        <div class="word">{{ word.word }}</div>
+
+                                        <div class="word" :class="{'cursor-pointer': word.reading || word.meaning}">{{ word.word }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -177,15 +178,10 @@
                     let wordData = element.querySelector('.word-data');
 
                     if(wordData) {
-                        word.addEventListener('mouseover', function() {
-                            console.log('mouseover on' + word);
+                        word.addEventListener('mousedown', function() {
                             if(wordData.classList.contains("hidden")) {
                                 wordData.classList.remove("hidden");
-                            }
-                        });
-                        word.addEventListener('mouseout', function() {
-                            console.log('mouseout on' + word);
-                            if(!wordData.classList.contains("hidden")) {
+                            } else if (!wordData.classList.contains("hidden")) {
                                 wordData.classList.add("hidden");
                             }
                         });
