@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\KanjiImport;
 use App\Models\Kanji;
 use App\Models\KunReading;
 use App\Models\OnReading;
 use App\Models\Tag;
 use App\Models\Word;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KanjiController extends Controller
 {
@@ -185,5 +188,12 @@ class KanjiController extends Controller
                 $kanji->tags()->save($existingTag);
             }
         }
+    }
+
+
+    public function importCsv()
+    {
+
+        Excel::import(new KanjiImport, Storage::path('Kanji_20220519_205706.csv'));
     }
 }
