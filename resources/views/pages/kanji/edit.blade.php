@@ -15,8 +15,13 @@
 
     <form method="post" action="/kanji/edit/{{$kanji->symbol}}" enctype="multipart/form-data">@csrf
         <div>
-            <label for="meaning" class="block">Meaning</label>
-            <textarea class="w-full" id="meaning" name="meaning" type="text">{{$kanji->meaning}}</textarea>
+            <label for="onmeaning" class="block">On-Meaning</label>
+            <textarea class="w-full" id="onmeaning" name="onmeaning" type="text">{{$kanji->on_meaning}}</textarea>
+        </div>
+
+        <div>
+            <label for="kunmeaning" class="block">Kun-Meaning</label>
+            <textarea class="w-full" id="kunmeaning" name="kunmeaning" type="text">{{$kanji->kun_meaning}}</textarea>
         </div>
 
         <div>
@@ -25,7 +30,7 @@
         </div>
 
         <div>
-            <label for="readings" class="block">Kun-Readings</label>
+            <label for="readings" class="block">Readings</label>
             <input class="w-full" id="readings" name="readings" type="text" value="@foreach($kanji->readings as $reading){{$reading->reading}}{{$loop->last ? '':','}}@endforeach">
         </div>
 

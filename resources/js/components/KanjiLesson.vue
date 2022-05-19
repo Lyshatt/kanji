@@ -24,17 +24,20 @@
                             </div>
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
-                                <div class="flex">
-                                    {{ activeKanji.meaning }}
+                                <div v-if="activeKanji.kun_meaning && activeKanji.kun_meaning !== '-'">
+                                    <span class="font-bold">Kun:</span> {{ activeKanji.kun_meaning }}
+                                </div>
+                                <div v-if="activeKanji.on_meaning && activeKanji.on_meaning !== '-'">
+                                    <span class="font-bold">On:</span> {{ activeKanji.on_meaning }}
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3" v-if="activeKanji.kun_readings.length > 0">
-                            <div class="text-xl mb-1">Kun-Readings</div>
+                        <div class="mb-3" v-if="activeKanji.readings.length > 0">
+                            <div class="text-xl mb-1">Readings</div>
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
                                 <div>
-                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="reading in activeKanji.kun_readings">
+                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="reading in activeKanji.readings">
                                     {{ reading.reading }}
                                 </span>
                                 </div>
@@ -56,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div  v-if="activeKanji.mnemonic.length > 0">
+                        <div  v-if="activeKanji.mnemonic && activeKanji.mnemonic.length > 0">
                             <div class="text-xl mb-1">Mnemonic</div>
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
@@ -94,8 +97,7 @@
         data() {
             return {
                 activeKanji: {
-                    kun_readings: [],
-                    on_readings: [],
+                    readings: [],
                     words: [],
                     mnemonic: ''
                 },
@@ -107,6 +109,8 @@
             this.activeKanji = this.kanjiStack[0];
             this.initialKanjiAmount = this.kanjiStack.length;
 
+            console.log(this.activeKanji);
+            console.log(this.initialKanjiAmount);
         },
 
         updated() {
@@ -178,23 +182,26 @@
 
             closeOpenedWordData(except = null) {
                 let containerOfAllWords = document.querySelector('.words');
-                let allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
 
-                allContainersOfSingleWords.forEach(function (element) {
-                    let wordData;
+                if(containerOfAllWords) {
+                    let allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
 
-                    if(except) {
-                        wordData = element.querySelector('.word-data:not(#' + except + ')');
-                    } else {
-                        wordData = element.querySelector('.word-data');
-                    }
+                    allContainersOfSingleWords.forEach(function (element) {
+                        let wordData;
 
-                    if(wordData) {
-                        if (!wordData.classList.contains("hidden")) {
-                            wordData.classList.add("hidden");
+                        if(except) {
+                            wordData = element.querySelector('.word-data:not(#' + except + ')');
+                        } else {
+                            wordData = element.querySelector('.word-data');
                         }
-                    }
-                });
+
+                        if(wordData) {
+                            if (!wordData.classList.contains("hidden")) {
+                                wordData.classList.add("hidden");
+                            }
+                        }
+                    });
+                }
             },
 
         }

@@ -23,7 +23,7 @@ class KanjiImport implements ToModel
 
         $kanji->save();
 
-        $readings = array_filter(explode(',', trim($row[8])));
+        $readings = array_filter(explode('、', trim($row[8])));
 
         foreach ($readings as $reading) {
             $existingReading = Reading::where('reading', $reading)->first();

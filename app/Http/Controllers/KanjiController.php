@@ -89,8 +89,9 @@ class KanjiController extends Controller
      */
     public function update(Request $request, $symbol)
     {
+
         $request->validate([
-            'meaning' => 'required',
+            'meaning' => '',
             'readings' => ''
         ]);
 
@@ -117,7 +118,8 @@ class KanjiController extends Controller
 
     private function saveKanji($kanji, $request) {
         $kanji->symbol = $request->symbol;
-        $kanji->meaning = $request->meaning;
+        $kanji->on_meaning = $request->onmeaning;
+        $kanji->kun_meaning = $request->kunmeaning;
         $kanji->mnemonic = $request->mnemonic;
 
         $kanji->save();

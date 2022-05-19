@@ -102,14 +102,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
@@ -117,8 +109,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       activeKanji: {
-        kun_readings: [],
-        on_readings: [],
+        readings: [],
         words: [],
         mnemonic: ''
       },
@@ -128,6 +119,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.activeKanji = this.kanjiStack[0];
     this.initialKanjiAmount = this.kanjiStack.length;
+    console.log(this.activeKanji);
+    console.log(this.initialKanjiAmount);
   },
   updated: function updated() {// this.registerWordContainerListener();
   },
@@ -184,22 +177,25 @@ __webpack_require__.r(__webpack_exports__);
     closeOpenedWordData: function closeOpenedWordData() {
       var except = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var containerOfAllWords = document.querySelector('.words');
-      var allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
-      allContainersOfSingleWords.forEach(function (element) {
-        var wordData;
 
-        if (except) {
-          wordData = element.querySelector('.word-data:not(#' + except + ')');
-        } else {
-          wordData = element.querySelector('.word-data');
-        }
+      if (containerOfAllWords) {
+        var allContainersOfSingleWords = containerOfAllWords.querySelectorAll('.word-container');
+        allContainersOfSingleWords.forEach(function (element) {
+          var wordData;
 
-        if (wordData) {
-          if (!wordData.classList.contains("hidden")) {
-            wordData.classList.add("hidden");
+          if (except) {
+            wordData = element.querySelector('.word-data:not(#' + except + ')');
+          } else {
+            wordData = element.querySelector('.word-data');
           }
-        }
-      });
+
+          if (wordData) {
+            if (!wordData.classList.contains("hidden")) {
+              wordData.classList.add("hidden");
+            }
+          }
+        });
+      }
     }
   }
 });
@@ -364,20 +360,40 @@ var render = function () {
                       on: { click: _vm.removeSelf },
                     }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "flex" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(_vm.activeKanji.meaning) +
-                          "\n                            "
-                      ),
-                    ]),
+                    _vm.activeKanji.kun_meaning &&
+                    _vm.activeKanji.kun_meaning !== "-"
+                      ? _c("div", [
+                          _c("span", { staticClass: "font-bold" }, [
+                            _vm._v("Kun:"),
+                          ]),
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.activeKanji.kun_meaning) +
+                              "\n                            "
+                          ),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.activeKanji.on_meaning &&
+                    _vm.activeKanji.on_meaning !== "-"
+                      ? _c("div", [
+                          _c("span", { staticClass: "font-bold" }, [
+                            _vm._v("On:"),
+                          ]),
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.activeKanji.on_meaning) +
+                              "\n                            "
+                          ),
+                        ])
+                      : _vm._e(),
                   ]),
                 ]),
                 _vm._v(" "),
-                _vm.activeKanji.kun_readings.length > 0
+                _vm.activeKanji.readings.length > 0
                   ? _c("div", { staticClass: "mb-3" }, [
                       _c("div", { staticClass: "text-xl mb-1" }, [
-                        _vm._v("Kun-Readings"),
+                        _vm._v("Readings"),
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "relative" }, [
@@ -389,59 +405,19 @@ var render = function () {
                         _vm._v(" "),
                         _c(
                           "div",
-                          _vm._l(
-                            _vm.activeKanji.kun_readings,
-                            function (kunReading) {
-                              return _c(
-                                "span",
-                                { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(kunReading.reading) +
-                                      "\n                            "
-                                  ),
-                                ]
-                              )
-                            }
-                          ),
-                          0
-                        ),
-                      ]),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.activeKanji.on_readings.length > 0
-                  ? _c("div", { staticClass: "mb-3" }, [
-                      _c("div", { staticClass: "text-xl mb-1" }, [
-                        _vm._v("On-Readings"),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "relative" }, [
-                        _c("div", {
-                          staticClass:
-                            "hider-box absolute w-full h-full bg-gray-300 cursor-pointer",
-                          on: { click: _vm.removeSelf },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          _vm._l(
-                            _vm.activeKanji.on_readings,
-                            function (onReading) {
-                              return _c(
-                                "span",
-                                { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(onReading.reading) +
-                                      "\n                            "
-                                  ),
-                                ]
-                              )
-                            }
-                          ),
+                          _vm._l(_vm.activeKanji.readings, function (reading) {
+                            return _c(
+                              "span",
+                              { staticClass: "mr-1 my-1 p-1 bg-gray-100" },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(reading.reading) +
+                                    "\n                            "
+                                ),
+                              ]
+                            )
+                          }),
                           0
                         ),
                       ]),
@@ -523,7 +499,7 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.activeKanji.mnemonic.length > 0
+                _vm.activeKanji.mnemonic && _vm.activeKanji.mnemonic.length > 0
                   ? _c("div", [
                       _c("div", { staticClass: "text-xl mb-1" }, [
                         _vm._v("Mnemonic"),
