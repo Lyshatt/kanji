@@ -12,7 +12,8 @@ class Kanji extends Model
 
     protected $fillable = [
         'symbol',
-        'meaning',
+        'on_meaning',
+        'kun_meaning',
         'mnemonic'
     ];
 
@@ -21,14 +22,9 @@ class Kanji extends Model
         return $this->belongsToMany(Tag::class, 'tag_kanji');
     }
 
-    public function kunReadings()
+    public function readings()
     {
-        return $this->belongsToMany(KunReading::class, 'kun_reading_kanji');
-    }
-
-    public function onReadings()
-    {
-        return $this->belongsToMany(OnReading::class, 'on_reading_kanji');
+        return $this->belongsToMany(Reading::class, 'reading_kanji');
     }
 
     public function words()

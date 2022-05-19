@@ -17,7 +17,8 @@ class CreateKanjiTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('symbol', 1)->unique();
-            $table->text('meaning');
+            $table->text('on_meaning')->nullable();
+            $table->text('kun_meaning')->nullable();
             $table->text('mnemonic')->nullable();
         });
     }

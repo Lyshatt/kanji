@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OnReading extends Model
+class Reading extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class OnReading extends Model
         'reading'
     ];
 
-    public function kanji()
+    public function kanjis()
     {
         return $this->belongsToMany(Kanji::class);
     }

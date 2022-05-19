@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\KanjiImport;
 use App\Models\Kanji;
-use App\Models\KunReading;
-use App\Models\OnReading;
+use App\Models\Reading;
 use App\Models\Tag;
 use App\Models\Word;
 use Illuminate\Http\Request;
@@ -44,8 +43,7 @@ class KanjiController extends Controller
         $request->validate([
             'symbol' => 'required|unique:kanji',
             'meaning' => 'required',
-            'kunreadings' => '',
-            'onreadings' => ''
+            'readings' => '',
         ]);
 
         $kanji = new Kanji();
@@ -72,7 +70,7 @@ class KanjiController extends Controller
      */
     public function edit($symbol)
     {
-        $kanji = Kanji::where('symbol', $symbol)->with('tags','kunReadings','onReadings','words')->first();
+        $kanji = Kanji::where('symbol', $symbol)->with('tags', 'readings', 'words')->first();
 
         if($kanji) {
             return view('pages.kanji.edit')->with(
@@ -93,8 +91,7 @@ class KanjiController extends Controller
     {
         $request->validate([
             'meaning' => 'required',
-            'kunreadings' => '',
-            'onreadings' => ''
+            'readings' => ''
         ]);
 
         $kanji = Kanji::where('symbol', $symbol)->first();
@@ -125,39 +122,24 @@ class KanjiController extends Controller
 
         $kanji->save();
 
-        $kanji->kunReadings()->detach();
-        $kanji->onReadings()->detach();
+        $kanji->readings()->detach();
         $kanji->words()->detach();
         $kanji->tags()->detach();
 
-        $kunReadings = array_filter(explode(',', $request->kunreadings));
-        $onReadings = array_filter( explode(',', $request->onreadings));
+        $readings = array_filter(explode(',', $request->readings));
         $words = array_filter(explode(',', $request->words));
         $tags = array_filter(explode(',', $request->tags));
 
-        foreach ($kunReadings as $kunReading) {
-            $existingKunReading = KunReading::where('reading', $kunReading)->first();
+        foreach ($readings as $reading) {
+            $existingReading = Reading::where('reading', $reading)->first();
 
-            if($existingKunReading) {
-                $kanji->kunReadings()->attach($existingKunReading);
+            if($existingReading) {
+                $kanji->readings()->attach($existingReading);
             } else {
-                $existingKunReading = new KunReading();
-                $existingKunReading->reading = $kunReading;
-                $existingKunReading->save();
-                $kanji->kunReadings()->save($existingKunReading);
-            }
-        }
-
-        foreach ($onReadings as $onReading) {
-            $existingOnReading = OnReading::where('reading', $onReading)->first();
-
-            if($existingOnReading) {
-                $kanji->onReadings()->attach($existingOnReading);
-            } else {
-                $existingOnReading = new OnReading();
-                $existingOnReading->reading = $onReading;
-                $existingOnReading->save();
-                $kanji->onReadings()->save($existingOnReading);
+                $existingReading = new Reading();
+                $existingReading->reading = $reading;
+                $existingReading->save();
+                $kanji->readings()->save($existingReading);
             }
         }
 

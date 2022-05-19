@@ -19,7 +19,7 @@ class LessonController extends Controller
             foreach ($request->tags as $tag) {
                 $kanjiArray = Kanji::whereHas('tags', function($query) use ($tag) {
                     $query->where('name', $tag);
-                })->with('tags','kunReadings','onReadings','words')->get()->toArray();
+                })->with('tags','readings','words')->get()->toArray();
 
                 $allKanji = array_merge($allKanji, $kanjiArray);
             }

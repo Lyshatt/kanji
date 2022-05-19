@@ -25,13 +25,8 @@
         </div>
 
         <div>
-            <label for="kunreadings" class="block">Kun-Readings</label>
-            <input class="w-full" id="kunreadings" name="kunreadings" type="text" value="@foreach($kanji->kunReadings as $kunReading){{$kunReading->reading}}{{$loop->last ? '':','}}@endforeach">
-        </div>
-
-        <div>
-            <label for="onreadings" class="block">On-Readings</label>
-            <input class="w-full" id="onreadings" name="onreadings" type="text" value="@foreach($kanji->onReadings as $onReading){{$onReading->reading}}{{$loop->last ? '':','}}@endforeach">
+            <label for="readings" class="block">Kun-Readings</label>
+            <input class="w-full" id="readings" name="readings" type="text" value="@foreach($kanji->readings as $reading){{$reading->reading}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <div>

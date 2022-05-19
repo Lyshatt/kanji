@@ -30,13 +30,8 @@
         </div>
 
         <div>
-            <label for="kunreadings" class="block">Kun-Readings</label>
-            <input class="w-full" id="kunreadings" name="kunreadings" type="text">
-        </div>
-
-        <div>
-            <label for="onreadings" class="block">On-Readings</label>
-            <input class="w-full" id="onreadings" name="onreadings" type="text">
+            <label for="readings" class="block">Kun-Readings</label>
+            <input class="w-full" id="readings" name="readings" type="text">
         </div>
 
         <div>

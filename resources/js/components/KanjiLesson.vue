@@ -34,19 +34,8 @@
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
                                 <div>
-                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="kunReading in activeKanji.kun_readings">
-                                    {{ kunReading.reading }}
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3" v-if="activeKanji.on_readings.length > 0">
-                            <div class="text-xl mb-1">On-Readings</div>
-                            <div class="relative">
-                                <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer" @click="removeSelf"></div>
-                                <div>
-                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="onReading in activeKanji.on_readings">
-                                    {{ onReading.reading }}
+                                <span class="mr-1 my-1 p-1 bg-gray-100" v-for="reading in activeKanji.kun_readings">
+                                    {{ reading.reading }}
                                 </span>
                                 </div>
                             </div>
