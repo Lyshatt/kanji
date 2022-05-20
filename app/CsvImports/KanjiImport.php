@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\CsvImports;
 
 use App\Models\Kanji;
 use App\Models\Reading;

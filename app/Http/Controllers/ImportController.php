@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\KanjiImport;
+use App\CsvImports\KanjiImport;
 use App\Models\Kanji;
 use App\Models\Word;
 use Illuminate\Http\Request;
@@ -14,6 +14,8 @@ use RoachPHP\Roach;
 
 class ImportController extends Controller
 {
+
+    // This can import thorough scraping websites. It is not in use right now
     public function index() {
         Roach::startSpider(JishoKanjiSpider::class);
     }

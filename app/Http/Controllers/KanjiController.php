@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\KanjiImport;
+use App\CsvImports\KanjiImport;
 use App\Models\Kanji;
 use App\Models\Reading;
 use App\Models\Tag;
