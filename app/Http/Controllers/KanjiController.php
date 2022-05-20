@@ -6,7 +6,7 @@ use App\CsvImports\KanjiImport;
 use App\Models\Kanji;
 use App\Models\Reading;
 use App\Models\Tag;
-use App\Models\Word;
+use App\Models\CommonWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -146,12 +146,12 @@ class KanjiController extends Controller
         }
 
         foreach ($words as $word) {
-            $existingWord = Word::where('word', $word)->first();
+            $existingWord = CommonWord::where('word', $word)->first();
 
             if($existingWord) {
                 $kanji->words()->attach($existingWord);
             } else {
-                $existingWord = new Word();
+                $existingWord = new CommonWord();
                 $existingWord->word = $word;
                 $existingWord->save();
                 $kanji->words()->save($existingWord);

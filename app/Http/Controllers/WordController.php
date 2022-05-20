@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Word;
+use App\Models\CommonWord;
 use Illuminate\Http\Request;
 
 class WordController extends Controller
@@ -54,7 +54,7 @@ class WordController extends Controller
      */
     public function edit(int $id)
     {
-        $word = Word::find($id);
+        $word = CommonWord::find($id);
 
         if($word) {
             return view('pages.word.edit')->with([
@@ -72,7 +72,7 @@ class WordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $word = Word::find($id);
+        $word = CommonWord::find($id);
 
         $word->meaning = $request->meaning;
         $word->reading = $request->reading;

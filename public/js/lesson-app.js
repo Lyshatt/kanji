@@ -102,6 +102,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kanjiStack: Array
@@ -110,7 +124,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       activeKanji: {
         readings: [],
-        words: [],
+        common_words: [],
+        uncommon_words: [],
         mnemonic: ''
       },
       initialKanjiAmount: 0
@@ -424,7 +439,8 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.activeKanji.words.length > 0
+                _vm.activeKanji.common_words.length > 0 ||
+                _vm.activeKanji.uncommon_words.length > 0
                   ? _c("div", { staticClass: "mb-3" }, [
                       _c("div", { staticClass: "text-xl mb-1" }, [
                         _vm._v("Words"),
@@ -437,64 +453,175 @@ var render = function () {
                           on: { click: _vm.removeSelf },
                         }),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "words" },
-                          _vm._l(_vm.activeKanji.words, function (word) {
-                            return _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1",
-                              },
-                              [
-                                word.reading || word.meaning
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center",
-                                        staticStyle: {
-                                          transform: "translate(-50%, -100%)",
-                                          top: "-5px",
-                                          left: "50%",
-                                          width: "max-content",
+                        _c("div", { staticClass: "words" }, [
+                          _vm.activeKanji.common_words.length > 0
+                            ? _c(
+                                "div",
+                                [
+                                  _c("div", { staticClass: "text-sm" }, [
+                                    _vm._v("Common: "),
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.activeKanji.common_words,
+                                    function (commonWord) {
+                                      return _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1",
                                         },
-                                        attrs: { id: "word-data-" + word.id },
-                                      },
-                                      [
-                                        _c("div", [
-                                          _vm._v(_vm._s(word.reading)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", [
-                                          _vm._v(_vm._s(word.meaning)),
-                                        ]),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "word",
-                                    class: {
-                                      "cursor-pointer":
-                                        word.reading || word.meaning,
-                                    },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.toggleWordData(word.id)
-                                      },
-                                    },
-                                  },
-                                  [_vm._v(_vm._s(word.word))]
-                                ),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
+                                        [
+                                          commonWord.reading ||
+                                          commonWord.meaning
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center",
+                                                  staticStyle: {
+                                                    transform:
+                                                      "translate(-50%, -100%)",
+                                                    top: "-5px",
+                                                    left: "50%",
+                                                    width: "max-content",
+                                                  },
+                                                  attrs: {
+                                                    id:
+                                                      "word-data-" +
+                                                      commonWord.id,
+                                                  },
+                                                },
+                                                [
+                                                  _c("div", [
+                                                    _vm._v(
+                                                      _vm._s(commonWord.reading)
+                                                    ),
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("div", [
+                                                    _vm._v(
+                                                      _vm._s(commonWord.meaning)
+                                                    ),
+                                                  ]),
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "word",
+                                              class: {
+                                                "cursor-pointer":
+                                                  commonWord.reading ||
+                                                  commonWord.meaning,
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.toggleWordData(
+                                                    commonWord.id
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(commonWord.word))]
+                                          ),
+                                        ]
+                                      )
+                                    }
+                                  ),
+                                ],
+                                2
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.activeKanji.uncommon_words.length > 0
+                            ? _c(
+                                "div",
+                                [
+                                  _c("div", { staticClass: "text-sm" }, [
+                                    _vm._v("Uncommon: "),
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.activeKanji.uncommon_words,
+                                    function (uncommonWord) {
+                                      return _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1",
+                                        },
+                                        [
+                                          uncommonWord.reading ||
+                                          uncommonWord.meaning
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center",
+                                                  staticStyle: {
+                                                    transform:
+                                                      "translate(-50%, -100%)",
+                                                    top: "-5px",
+                                                    left: "50%",
+                                                    width: "max-content",
+                                                  },
+                                                  attrs: {
+                                                    id:
+                                                      "word-data-" +
+                                                      uncommonWord.id,
+                                                  },
+                                                },
+                                                [
+                                                  _c("div", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        uncommonWord.reading
+                                                      )
+                                                    ),
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("div", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        uncommonWord.meaning
+                                                      )
+                                                    ),
+                                                  ]),
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "word",
+                                              class: {
+                                                "cursor-pointer":
+                                                  uncommonWord.reading ||
+                                                  uncommonWord.meaning,
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.toggleWordData(
+                                                    uncommonWord.id
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(uncommonWord.word))]
+                                          ),
+                                        ]
+                                      )
+                                    }
+                                  ),
+                                ],
+                                2
+                              )
+                            : _vm._e(),
+                        ]),
                       ]),
                     ])
                   : _vm._e(),

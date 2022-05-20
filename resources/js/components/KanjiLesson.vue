@@ -43,18 +43,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3"  v-if="activeKanji.words.length > 0">
+                        <div class="mb-3"  v-if="activeKanji.common_words.length > 0 || activeKanji.uncommon_words.length > 0">
                             <div class="text-xl mb-1">Words</div>
                             <div class="relative">
                                 <div class="hider-box absolute w-full h-full bg-gray-300 cursor-pointer z-10" @click="removeSelf"></div>
                                 <div class="words">
-                                    <div class="word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1" v-for="word in activeKanji.words">
-                                        <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" :id="'word-data-' + word.id" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="word.reading || word.meaning">
-                                            <div>{{word.reading}}</div>
-                                            <div>{{word.meaning}}</div>
-                                        </div>
+                                    <div v-if="activeKanji.common_words.length > 0">
+                                        <div class="text-sm">Common: </div>
+                                        <div class="word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1" v-for="commonWord in activeKanji.common_words">
+                                            <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" :id="'word-data-' + commonWord.id" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="commonWord.reading || commonWord.meaning">
+                                                <div>{{commonWord.reading}}</div>
+                                                <div>{{commonWord.meaning}}</div>
+                                            </div>
 
-                                        <div class="word" @click="toggleWordData(word.id)" :class="{'cursor-pointer': word.reading || word.meaning}">{{ word.word }}</div>
+                                            <div class="word" @click="toggleWordData(commonWord.id)" :class="{'cursor-pointer': commonWord.reading || commonWord.meaning}">{{ commonWord.word }}</div>
+                                        </div>
+                                    </div>
+                                    <div v-if="activeKanji.uncommon_words.length > 0">
+                                        <div class="text-sm">Uncommon: </div>
+                                        <div class="word-container inline-block mr-1 my-1 p-1 bg-gray-100 relative z-0 outline-1" v-for="uncommonWord in activeKanji.uncommon_words">
+                                            <div style="transform: translate(-50%, -100%); top: -5px; left: 50%; width: max-content;" :id="'word-data-' + uncommonWord.id" class="word-data absolute bg-white z-20 rounded p-1 text-xs border-2 border-gray-500 hidden text-center" v-if="uncommonWord.reading || uncommonWord.meaning">
+                                                <div>{{uncommonWord.reading}}</div>
+                                                <div>{{uncommonWord.meaning}}</div>
+                                            </div>
+
+                                            <div class="word" @click="toggleWordData(uncommonWord.id)" :class="{'cursor-pointer': uncommonWord.reading || uncommonWord.meaning}">{{ uncommonWord.word }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +112,8 @@
             return {
                 activeKanji: {
                     readings: [],
-                    words: [],
+                    common_words: [],
+                    uncommon_words: [],
                     mnemonic: ''
                 },
                 initialKanjiAmount: 0

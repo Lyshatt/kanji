@@ -14,7 +14,8 @@ class Kanji extends Model
         'symbol',
         'on_meaning',
         'kun_meaning',
-        'mnemonic'
+        'mnemonic',
+        'is_fully_imported'
     ];
 
     public function tags()
@@ -27,10 +28,14 @@ class Kanji extends Model
         return $this->belongsToMany(Reading::class, 'reading_kanji');
     }
 
-    public function words()
+    public function commonWords()
     {
-        return $this->belongsToMany(Word::class, 'word_kanji');
+        return $this->belongsToMany(CommonWord::class, 'common_word_kanji');
     }
 
+    public function uncommonWords()
+    {
+        return $this->belongsToMany(UncommonWord::class, 'uncommon_word_kanji');
+    }
 
 }
