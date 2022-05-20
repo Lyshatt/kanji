@@ -29,7 +29,7 @@ class ImportFromJisho extends Command
     public function handle()
     {
         $importController = new ImportController;
-        $importController->index();
+        $importController->importFronJisho();
 
         return 0;
     }

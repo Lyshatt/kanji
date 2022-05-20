@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\KanjiController;
+use App\Http\Controllers\ImportController;
 use Illuminate\Console\Command;
 
 class ImportKanjiFromCsv extends Command
@@ -28,8 +28,8 @@ class ImportKanjiFromCsv extends Command
      */
     public function handle()
     {
-        $kanjiController = new KanjiController();
-        $kanjiController->importCsv();
+        $importController = new ImportController();
+        $importController->importCsv();
         return 0;
     }
 }

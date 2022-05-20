@@ -146,8 +146,6 @@ class KanjiController extends Controller
         }
 
         foreach ($words as $word) {
-
-
             $existingWord = Word::where('word', $word)->first();
 
             if($existingWord) {
@@ -172,12 +170,5 @@ class KanjiController extends Controller
                 $kanji->tags()->save($existingTag);
             }
         }
-    }
-
-
-    public function importCsv()
-    {
-
-        Excel::import(new KanjiImport, Storage::path('Kanji_20220519_205706.csv'));
     }
 }
