@@ -123,9 +123,6 @@
         mounted() {
             this.activeKanji = this.kanjiStack[0];
             this.initialKanjiAmount = this.kanjiStack.length;
-
-            console.log(this.activeKanji);
-            console.log(this.initialKanjiAmount);
         },
 
         updated() {

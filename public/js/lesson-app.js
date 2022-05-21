@@ -134,8 +134,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.activeKanji = this.kanjiStack[0];
     this.initialKanjiAmount = this.kanjiStack.length;
-    console.log(this.activeKanji);
-    console.log(this.initialKanjiAmount);
   },
   updated: function updated() {// this.registerWordContainerListener();
   },
