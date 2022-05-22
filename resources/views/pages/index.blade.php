@@ -6,10 +6,11 @@
         <div class="bg-white rounded shadow p-3 mb-4">
             <div class="text-sky-900 text-2xl mb-4">Select which kanji you want to practice.</div>
 
-            <div class="">
+            <div>
                 @foreach($tags as $tag)
                     <div class="tag-container pr-1 inline-block mb-1">
-                        <input class="cursor-pointer w-full p-2 rounded text-white bg-gray-500 caret-transparent text-center" size="5" name="tags[]" id="tag-{{$tag->id}}" value="{{$tag->name}}" disabled>
+                        <input class="hidden" size="5" name="tags[]" id="tag-{{$tag->id}}" value="{{$tag->name}}" disabled>
+                        <button style="width: 100px;" type="button" class="cursor-pointer w-full p-2 rounded text-white bg-gray-500 caret-transparent text-center">{{$tag->name}}</button>
                     </div>
                 @endforeach
             </div>
@@ -33,17 +34,18 @@
     <script>
         document.querySelectorAll('.tag-container').forEach(function (element){
             let input = element.querySelector('input');
+            let button = element.querySelector('button');
 
-            element.addEventListener('click', function () {
+            button.addEventListener('click', function () {
                 input.disabled = !input.disabled;
                 input.readonly = !input.readonly;
 
                 if(input.disabled) {
-                    input.classList.remove('bg-sky-900');
-                    input.classList.add('bg-gray-500');
+                    button.classList.remove('bg-sky-900');
+                    button.classList.add('bg-gray-500');
                 } else if(input.readonly) {
-                    input.classList.add('bg-sky-900');
-                    input.classList.remove('bg-gray-500');
+                    button.classList.add('bg-sky-900');
+                    button.classList.remove('bg-gray-500');
                 }
             })
         });
