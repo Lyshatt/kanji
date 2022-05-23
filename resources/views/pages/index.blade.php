@@ -6,11 +6,11 @@
         <div class="bg-white rounded shadow p-3 mb-4">
             <div class="text-sky-900 text-2xl mb-4">Select which kanji you want to practice.</div>
 
-            <div>
+            <div class="flex flex-wrap">
                 @foreach($tags as $tag)
-                    <div class="tag-container pr-1 inline-block mb-1">
+                    <div class="tag-container px-0.5 inline-block mb-1 w-1/2 md:w-1/6 xl:w-1/12">
                         <input class="hidden" size="5" name="tags[]" id="tag-{{$tag->id}}" value="{{$tag->name}}" disabled>
-                        <button style="width: 100px;" type="button" class="cursor-pointer w-full p-2 rounded text-white bg-gray-500 caret-transparent text-center">{{$tag->name}}</button>
+                        <button type="button" class="cursor-pointer w-full p-2 rounded text-white bg-gray-500 caret-transparent text-center">{{$tag->name}}</button>
                     </div>
                 @endforeach
             </div>
@@ -18,13 +18,24 @@
 
         <div>
             <button class="bg-sky-800 py-3 px-4 rounded hover:bg-sky-900 text-white text-md flex items-center" type="submit">
-                <div class="mr-1">Start lesson</div>
-                <div>
+                <span class="mr-1">Start lesson</span>
+                <span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
-                </div>
+                </span>
             </button>
+            <a href="/lesson/random">
+                <div class="text-md mb-1 text-gray-500 mt-2 flex items-center hover:text-sky-700">
+                        <span class="mr-1">Or just give me 10 random kanji!</span>
+                        <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                </div>
+            </a>
+
             @if($errors->any())
                 <div class="text-red-900 mt-2 p-2 bg-red-100">{{$errors->first()}}</div>
             @endif

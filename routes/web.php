@@ -39,4 +39,6 @@ Route::post('/word/edit/{id}', [WordController::class, 'update'])->middleware('a
 Route::get('/lesson', function () { return redirect('/'); });
 Route::post('/lesson', [LessonController::class, 'index'] );
 
+Route::get('/lesson/random', [LessonController::class, 'random']);
+
 Route::get('/backend', [BackendController::class, 'index'] )->middleware('auth');

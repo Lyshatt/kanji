@@ -30,7 +30,14 @@ class LessonController extends Controller
         } else {
             return redirect('/')->withErrors(['msg' => 'You must select at least one tag.']);
         }
+    }
 
+    public function random() {
+        $kanji = Kanji::inRandomOrder()->limit(10)->with('tags','readings','commonWords', 'uncommonWords')->get()->toArray();
+
+        return view('pages.lesson.index')->with(
+            ['kanjiByTag' => $kanji]
+        );
 
     }
 }
