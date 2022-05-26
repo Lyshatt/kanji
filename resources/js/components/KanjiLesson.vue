@@ -94,7 +94,7 @@
 
         <div v-else>
             <div class="bg-white rounded shadow p-3 mb-4">
-            You finished the lesson. How was ist? You can start a new lesson from <a class="font-bold text-sky-900 hover:text-sky-700" href="/">here</a>.
+            You finished the lesson. How was it? You can start a new lesson from <a class="font-bold text-sky-900 hover:text-sky-700" href="/">here</a>.
             </div>
         </div>
 
