@@ -42,3 +42,8 @@ Route::post('/lesson', [LessonController::class, 'index'] );
 Route::get('/lesson/random', [LessonController::class, 'random']);
 
 Route::get('/backend', [BackendController::class, 'index'] )->middleware('auth');
+
+Route::get('/static', function () {
+    return view('pages.lesson.static');
+} );
+

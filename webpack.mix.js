@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/lesson-app.js", "public/js")
+    .js("resources/js/static-lesson-app.js", "public/js")
     .vue()
     .postCss("resources/css/app.css", "public/css", [
         require("tailwindcss"),
