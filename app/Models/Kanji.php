@@ -38,4 +38,10 @@ class Kanji extends Model
         return $this->belongsToMany(UncommonWord::class, 'uncommon_word_kanji');
     }
 
+    public function scopeFullyImported($query)
+    {
+        return $query->where('is_fully_imported', true);
+
+        // Kanji::where(...)->fullyImported();
+    }
 }

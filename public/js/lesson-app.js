@@ -681,7 +681,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "bg-white rounded shadow p-3 mb-4" }, [
       _vm._v(
-        "\n        You finished the lesson. How was ist? You can start a new lesson from "
+        "\n        You finished the lesson. How was it? You can start a new lesson from "
       ),
       _c(
         "a",
