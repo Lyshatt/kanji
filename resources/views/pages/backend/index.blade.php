@@ -6,14 +6,37 @@
             <a href="/kanji/create">Add new kanji</a>
         </div>
 
+{{--        <div class="mb-3">--}}
+{{--            <div>Edit kanji</div>--}}
+{{--            @foreach($allKanji as $kanji)--}}
+{{--                <div class="inline-block bg-gray-300 px-1 m-1 rounded">--}}
+{{--                    <a href="/kanji/edit/{{$kanji->symbol}}">{{$kanji->symbol}}</a>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
+
         <div class="mb-3">
-            <div>Edit kanji</div>
+            <div>Edit kanji that have a menmonic</div>
             @foreach($allKanji as $kanji)
-                <div class="inline-block bg-gray-300 px-1 m-1 rounded">
-                    <a href="/kanji/edit/{{$kanji->symbol}}">{{$kanji->symbol}}</a>
-                </div>
+                @if($kanji->mnemonic)
+                    <div class="inline-block bg-gray-300 px-1 m-1 rounded">
+                        <a href="/kanji/edit/{{$kanji->symbol}}">{{$kanji->symbol}}</a>
+                    </div>
+                @endif
             @endforeach
         </div>
+
+        <div class="mb-3">
+            <div>Edit kanji that don't have a menmonic</div>
+            @foreach($allKanji as $kanji)
+                @if(!$kanji->mnemonic)
+                    <div class="inline-block bg-gray-300 px-1 m-1 rounded">
+                        <a href="/kanji/edit/{{$kanji->symbol}}">{{$kanji->symbol}}</a>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+
 
         <div class="mb-3">
             <div>Words without reading or meaning</div>

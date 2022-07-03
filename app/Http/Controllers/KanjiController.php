@@ -7,6 +7,7 @@ use App\Models\Kanji;
 use App\Models\Reading;
 use App\Models\Tag;
 use App\Models\CommonWord;
+use App\Models\UncommonWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -70,7 +71,7 @@ class KanjiController extends Controller
      */
     public function edit($symbol)
     {
-        $kanji = Kanji::where('symbol', $symbol)->with('tags', 'readings', 'words')->first();
+        $kanji = Kanji::where('symbol', $symbol)->with('tags', 'readings', 'commonWords', 'uncommonWords')->first();
 
         if($kanji) {
             return view('pages.kanji.edit')->with(
@@ -117,6 +118,7 @@ class KanjiController extends Controller
     }
 
     private function saveKanji($kanji, $request) {
+
         $kanji->symbol = $request->symbol;
         $kanji->on_meaning = $request->onmeaning;
         $kanji->kun_meaning = $request->kunmeaning;
@@ -125,11 +127,13 @@ class KanjiController extends Controller
         $kanji->save();
 
         $kanji->readings()->detach();
-        $kanji->words()->detach();
+        $kanji->commonWords()->detach();
+        $kanji->uncommonWords()->detach();
         $kanji->tags()->detach();
 
         $readings = array_filter(explode(',', $request->readings));
-        $words = array_filter(explode(',', $request->words));
+        $commonWords = array_filter(explode(',', $request->commonwords));
+        $uncommonWords = array_filter(explode(',', $request->uncommonwords));
         $tags = array_filter(explode(',', $request->tags));
 
         foreach ($readings as $reading) {
@@ -145,16 +149,29 @@ class KanjiController extends Controller
             }
         }
 
-        foreach ($words as $word) {
-            $existingWord = CommonWord::where('word', $word)->first();
+        foreach ($commonWords as $commonWord) {
+            $existingWord = CommonWord::where('word', $commonWord)->first();
 
             if($existingWord) {
-                $kanji->words()->attach($existingWord);
+                $kanji->commonWords()->attach($existingWord);
             } else {
                 $existingWord = new CommonWord();
-                $existingWord->word = $word;
+                $existingWord->word = $commonWord;
                 $existingWord->save();
-                $kanji->words()->save($existingWord);
+                $kanji->commonWords()->save($existingWord);
+            }
+        }
+
+        foreach ($uncommonWords as $uncommonWord) {
+            $existingWord = UncommonWord::where('word', $uncommonWord)->first();
+
+            if($existingWord) {
+                $kanji->uncommonWords()->attach($existingWord);
+            } else {
+                $existingWord = new UncommonWord();
+                $existingWord->word = $uncommonWord;
+                $existingWord->save();
+                $kanji->uncommonWords()->save($existingWord);
             }
         }
 

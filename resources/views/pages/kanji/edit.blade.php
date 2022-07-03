@@ -1,6 +1,7 @@
 @extends('templates.default')
 
 @section('content')
+
     <h1 class="text-5xl text-center text-sky-900 mb-3">Edit {{$kanji->symbol}}</h1>
 
     @if ($errors->any())
@@ -35,8 +36,13 @@
         </div>
 
         <div>
-            <label for="words" class="block">Words</label>
-            <input class="w-full" id="words" name="words" type="text" value="@foreach($kanji->words as $word){{$word->word}}{{$loop->last ? '':','}}@endforeach">
+            <label for="commonwords" class="block">Common Words</label>
+            <input class="w-full" id="commonwords" name="commonwords" type="text" value="@foreach($kanji->commonWords as $commonWord){{$commonWord->word}}{{$loop->last ? '':','}}@endforeach">
+        </div>
+
+        <div>
+            <label for="uncommonwords" class="block">Uncommon Words</label>
+            <input class="w-full" id="uncommonwords" name="uncommonwords" type="text" value="@foreach($kanji->uncommonWords as $uncommonWord){{$uncommonWord->word}}{{$loop->last ? '':','}}@endforeach">
         </div>
 
         <div>
